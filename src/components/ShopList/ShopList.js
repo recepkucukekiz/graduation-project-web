@@ -1,23 +1,23 @@
 import React from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import "./categories.css";
+import "./shoplist.css";
 
-const Categories = ({data}) => {
+const ShopList = ({data}) => {
     const cat = [];
 
     data.forEach((category) => {
-        cat.push(<div className="category_item">
+        cat.push(<div className="shoplist_item">
             {category}
         </div>)
     })
 
     return (
         <>
-        <div className="app__categories">
+        <div className="app__shoplist">
             {cat}
         </div>
         </>
     );
 };
 
-export default Categories
+export default ShopList

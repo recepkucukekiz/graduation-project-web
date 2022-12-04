@@ -2,6 +2,8 @@ import React from 'react'
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import Categories from '../components/Categories/Categories';
 import 'bootstrap/dist/css/bootstrap.css';
+import ShopList from '../components/ShopList/ShopList';
+import FilterBox from '../components/FilterBox/FilterBox';
 
 const CustomLink = ({ to, pageName }) => {
   const resolved = useResolvedPath(to);
@@ -18,10 +20,12 @@ const Home = () => {
     <>
       <div className='row'>
         <div className='col-lg-3'>
-          <Categories data="test" />
+          <Categories data={["a","b","c"]} />
         </div>
         <div className='col-lg-9'>
-          <CustomLink to="/projects" pageName="Projects" />
+          {/* <CustomLink to="/projects" pageName="Projects" /> */}
+          <FilterBox />
+          <ShopList data={["a","b","c","a","b","c","a","b","c","a","b","c","a","b","c","a","b","c","a","b","c","a"]} />
         </div>
       </div>
     </>
