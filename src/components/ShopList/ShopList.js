@@ -3,18 +3,18 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import "./shoplist.css";
 
 const ShopList = ({data}) => {
-    const cat = [];
+    const shopView = [];
 
-    data.forEach((category) => {
-        cat.push(<div className="shoplist_item">
-            {category}
+    data.forEach((shop) => {
+        shopView.push(<div className="shoplist_item">
+            {shop}
         </div>)
     })
 
     return (
         <>
         <div className="app__shoplist">
-            {cat}
+            {shopView}
         </div>
         </>
     );
