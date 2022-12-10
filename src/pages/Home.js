@@ -25,7 +25,7 @@ const Home = () => {
         <div className='col-lg-9'>
           {/* <CustomLink to="/projects" pageName="Projects" /> */}
           <FilterBox />
-          <ShopList data={["a","b","c","a","b","c","a","b","c","a","b","c","a","b","c","a","b","c","a","b","c","a"]} />
+          <ShopList />
         </div>
       </div>
     </>

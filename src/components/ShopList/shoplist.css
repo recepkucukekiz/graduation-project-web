@@ -12,9 +12,8 @@
   
   .shoplist_item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin: 1rem;
     padding: 2rem;
     width: 100%;

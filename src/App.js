@@ -7,6 +7,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import ShopDetail from "./pages/ShopDetail";
+import Calendar from "./pages/calendar/Calendar";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
+            <Route path="/shop/:id" element={<ShopDetail />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

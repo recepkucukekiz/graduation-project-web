@@ -1,0 +1,17 @@
+.shopdetail_itembox {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 25px;
+    cursor:pointer;
+}
+
+.selected_itembox {
+    background-color: red;
+}
+
+.itembox_frame {
+    margin: 2rem;
+    padding: 1rem;
+    background-color: #101828;
+    border-radius: 25px;
+}
