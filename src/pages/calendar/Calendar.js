@@ -168,8 +168,8 @@ class Calendar extends Component {
         <div className={"left"}>
           <DayPilotNavigator
             selectMode={"Day"}
-            showMonths={3}
-            skipMonths={3}
+            showMonths={1}
+            skipMonths={1}
             onTimeRangeSelected={ args => {
               this.calendar.update({
                 startDate: args.day

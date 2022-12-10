@@ -10,6 +10,8 @@ const ShopDetail = () => {
 
   const [selectedWorker, setSelectedWorker] = useState("");
   const [selectedService, setSelectedService] = useState("");
+  const [services, setServices] = useState(shop.services);
+  const ignoreService = ["Saç", "Sakal"];
 
   return (
     <>
@@ -29,20 +31,23 @@ const ShopDetail = () => {
 
       <div className="d-flex">
         <div className="d-flex justify-content-between w-50 flex-wrap itembox_frame">
-          {shop.services.map(item => (
-            <div
-              className={selectedService == item ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
-              onClick={() => {
-                if (selectedService == item) {
-                  setSelectedService("");
-                } else {
-                  setSelectedService(item);
-                }
-              }}
-            >
-              {item}
-            </div>
-          ))}
+          {
+            services.map((item) => {
+              return (
+                <div
+                  className={selectedService == item ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
+                  onClick={() => {
+                    if (selectedService == item) {
+                      setSelectedService("");
+                    } else {
+                      setSelectedService(item);
+                    }
+                  }}
+                >
+                  {item}
+                </div>)
+            })
+          }
         </div>
 
         <div className="d-flex justify-content-between w-50 flex-wrap itembox_frame">
@@ -52,8 +57,12 @@ const ShopDetail = () => {
               onClick={() => {
                 if (selectedWorker == item) {
                   setSelectedWorker("");
+                  setServices(shop.services);
                 } else {
                   setSelectedWorker(item);
+                  if(item == "Ahmet"){
+                    setServices(shop.services.filter(service => ignoreService.indexOf(service) == -1))
+                  }
                 }
               }}
             >
