@@ -21,6 +21,9 @@ const Navbar = () => {
       <ul className="nav__list">
         <CustomLink to="/about" pageName="About" />
         <CustomLink to="/calendar" pageName="Calendar" />
+        <CustomLink to="/calendarv2" pageName="CalendarV2" />
+        <CustomLink to="/login" pageName="Login" />
+        <CustomLink to="/signup" pageName="Sign Up" />
       </ul>
     </nav>
   );

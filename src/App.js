@@ -9,6 +9,13 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ShopDetail from "./pages/ShopDetail";
 import Calendar from "./pages/calendar/Calendar";
+import Login from './pages/management/login/login';
+import Signup from './pages/management/signup/signup';
+import Calendarv2 from "./pages/calendarv2/calendarv2";
+
+import '@progress/kendo-theme-default/dist/all.css';
+import PickDateOfBirth from './components/calendartest/PickDateOfBirth';
+import Calendarv3 from './components/calendartest/Calendarv3';
 
 function App() {
   return (
@@ -22,6 +29,10 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/shop/:id" element={<ShopDetail />} />
             <Route path="/calendar" element={<Calendar />} />
+            <Route path="/calendarv2" element={<Calendarv2 />} />
+            <Route path="/calendarv3" element={<Calendarv3 />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -181,7 +181,7 @@ class Calendar extends Component {
         <div className={"calendar"}>
 
           <div className={"toolbar"}>
-            <ResourceGroups onChange={args => this.groupChanged(args.selected)} items={this.loadGroups()}></ResourceGroups>
+            {/* <ResourceGroups onChange={args => this.groupChanged(args.selected)} items={this.loadGroups()}></ResourceGroups> */}
             <span>Day:</span>
             <button onClick={ev => this.previous()}>Previous</button>
             <button onClick={ev => this.next()}>Next</button>
