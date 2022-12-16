@@ -41,11 +41,12 @@ const pickSlotTimes = times => {
   return timesPicked.sort();
 };
 
-const BookDrivingSlot = props => {
+const AvailabilityPicker = props => {
   const [bookingDate, setBookingDate] = useState(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [bookingTimes, setBookingTimes] = useState([]);
   const timeSlotCacheRef = useRef(new Map());
+  const [selectedTimeSlotElement, setSelectedTimeSlotElement] = useState(null);
 
   useEffect(() => {
     // Bail out if there is no date selected
@@ -66,14 +67,26 @@ const BookDrivingSlot = props => {
     setBookingTimes(newBookingTimes);
   }, [bookingDate]);
 
+  useEffect(() => {
+    if (selectedTimeSlotElement) {
+      selectedTimeSlotElement.style.backgroundColor = 'red'
+    }
+  }, [selectedTimeSlotElement])
+
   const onDateChange = e => {
     setSelectedTimeSlot(null);
     setBookingDate(e.value);
   };
 
+  const customerForm = (
+    <>
+      <div className="k-mb-4 k-font-weight-bold">Customer Details</div>
+    </>
+  );
+
   return (
     <div className="k-my-8">
-      <div className="k-mb-4 k-font-weight-bold">Book driving slot</div>
+      <div className="k-mb-4 k-font-weight-bold">Choose Date</div>
 
       <div className="k-flex k-display-flex k-mb-4">
         <Calendar value={bookingDate} onChange={onDateChange} />
@@ -83,13 +96,23 @@ const BookDrivingSlot = props => {
               <button
                 key={time}
                 className="k-button k-mb-4"
-                onClick={e => setSelectedTimeSlot(time)}
+                onClick={
+                  (e) => {
+                    setSelectedTimeSlot(time)
+                    console.log(e)
+                    if (selectedTimeSlotElement) {
+                      selectedTimeSlotElement.style.backgroundColor = 'white'
+                    }
+                    setSelectedTimeSlotElement(e.target)
+                  }
+                }
               >
                 {time}
               </button>
             );
           })}
         </div>
+        {selectedTimeSlot !== null ? customerForm : null}
       </div>
 
       {bookingDate && selectedTimeSlot ? (
@@ -101,4 +124,4 @@ const BookDrivingSlot = props => {
   );
 };
 
-export default BookDrivingSlot;
+export default AvailabilityPicker;

@@ -1,4 +1,4 @@
-import BookDrivingSlot from "./BookDrivingSlot";
+import AvailabilityPicker from "./availabilityPicker";
 
 
 const Calendarv3 = () => {
@@ -6,7 +6,7 @@ const Calendarv3 = () => {
     return (
     <div>
       <hr />
-      <BookDrivingSlot />
+      <AvailabilityPicker />
     </div>
     );
     }
