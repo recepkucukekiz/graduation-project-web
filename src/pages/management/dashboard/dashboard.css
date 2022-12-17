@@ -1,0 +1,18 @@
+.shape_box {
+    display: flex;
+    background-color: #101828;
+    color: white;
+    align-items: center;
+    padding: 2rem;
+    margin: 1rem 1rem;
+    border-radius: 25px;
+}
+
+.shape_box p, .shape_box h5 {
+    margin: 0;
+}
+
+.fd-column {
+    display: flex;
+    flex-direction: column;
+}

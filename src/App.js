@@ -16,6 +16,7 @@ import Calendarv2 from "./pages/calendarv2/calendarv2";
 import '@progress/kendo-theme-default/dist/all.css';
 import PickDateOfBirth from './components/calendartest/PickDateOfBirth';
 import Calendarv3 from './components/calendartest/Calendarv3';
+import Dashboard from './pages/management/dashboard/dashboard';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/calendarv3" element={<Calendarv3 />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
