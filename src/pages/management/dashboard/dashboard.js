@@ -41,6 +41,10 @@ const Dashboard = () => {
             <div className='row'>
                 <div className='col-lg-3'>
                     <div className='shape_box fd-column'>
+                        <div className='d-flex justify-content-end w-100'>
+                            {/* <img src="https://img.icons8.com/ios/50/null/pencil--v1.png" /> */}
+                            <button className='btn btn-light'>Edit</button>
+                        </div>
                         <img src="https://www.transparentpng.com/thumb/shopping/hR31Wp-shopping-markets-vector-image.png" className='w-100 p-5' />
                         <h5>Suha berber</h5>
                         <p>İbo Osman Cad. 70095 Sk. No:6</p>
@@ -50,11 +54,29 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className='col-lg-9'>
-                    <div className='shape_box justify-content-between'>
-                        <span>kfuhgvdkfj</span>
-                        <span>kfuhgvdkfj</span>
+                    <div className='row'>
+                        <div className='col-lg-6'>
+                            <div className='shape_box d-flex justify-content-between'>
+                                <h5>Today's Appointments</h5>
+                                <p>+8</p>
+                            </div>
+                        </div>
+                        <div className='col-lg-6'>
+                            <div className='shape_box d-flex justify-content-between'>
+                                <h5>Haftalık Doluluk Oranı</h5>
+                                <p>70%</p>
+                            </div>
+                        </div>
+                        {/* <div className='col-lg-4'>
+                            <div className='shape_box'>
+                                <h5>Haftalık Doluluk Oranı</h5>
+                                <p>70%</p>
+                            </div>
+                        </div> */}
                     </div>
-                    <h3>workers</h3>
+                    <div className='d-flex justify-item-start p-4'>
+                        <h3>Workers</h3>
+                    </div>
                     <div>
                         {workerList()}
                     </div>

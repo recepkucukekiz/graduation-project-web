@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <nav className="app__navbar">
       <Link className="app__header" to="/">
-        Project Name
+        Bitirme
       </Link>
       <ul className="nav__list">
         <CustomLink to="/about" pageName="About" />
@@ -24,6 +24,7 @@ const Navbar = () => {
         <CustomLink to="/calendarv2" pageName="CalendarV2" />
         <CustomLink to="/login" pageName="Login" />
         <CustomLink to="/signup" pageName="Sign Up" />
+        <CustomLink to="/dashboard" pageName="Dashboard" />
       </ul>
     </nav>
   );
