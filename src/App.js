@@ -17,6 +17,7 @@ import '@progress/kendo-theme-default/dist/all.css';
 import PickDateOfBirth from './components/calendartest/PickDateOfBirth';
 import Calendarv3 from './components/calendartest/Calendarv3';
 import Dashboard from './pages/management/dashboard/dashboard';
+import Edit from './pages/management/editshop/editshop';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/edit" element={<Edit />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

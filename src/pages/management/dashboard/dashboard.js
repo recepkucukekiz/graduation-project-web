@@ -1,6 +1,7 @@
 import React from 'react'
 import "./dashboard.css";
 import data from '../../../const';
+import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
 
@@ -36,6 +37,8 @@ const Dashboard = () => {
         return arr;
     }
 
+    const navigate = useNavigate();
+
     return (
         <>
             <div className='row'>
@@ -43,7 +46,14 @@ const Dashboard = () => {
                     <div className='shape_box fd-column'>
                         <div className='d-flex justify-content-end w-100'>
                             {/* <img src="https://img.icons8.com/ios/50/null/pencil--v1.png" /> */}
-                            <button className='btn btn-light'>Edit</button>
+                            <button 
+                                className='btn btn-light'
+                                onClick={() => {
+                                     navigate("/edit/")
+                                }}
+                            >
+                                Edit
+                            </button>
                         </div>
                         <img src="https://www.transparentpng.com/thumb/shopping/hR31Wp-shopping-markets-vector-image.png" className='w-100 p-5' />
                         <h5>Suha berber</h5>
