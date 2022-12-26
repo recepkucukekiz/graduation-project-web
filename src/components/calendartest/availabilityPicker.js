@@ -76,17 +76,25 @@ const AvailabilityPicker = props => {
   const onDateChange = e => {
     setSelectedTimeSlot(null);
     setBookingDate(e.value);
+    console.log(e.value.toDateString());
   };
 
   const customerForm = (
     <>
-      <div className="k-mb-4 k-font-weight-bold">Customer Details</div>
+      <div>
+        Selected slot: {bookingDate ? bookingDate.toDateString() : ""} at {selectedTimeSlot}
+        <p>{props.worker}</p>
+        <p>{props.service}</p>
+      </div>
+
     </>
   );
 
   return (
+    <>
+    <p>You selected {props.service} from {props.worker}.</p>
     <div className="k-my-8">
-      <div className="k-mb-4 k-font-weight-bold">Choose Date</div>
+      {/* <div className="k-mb-4 k-font-weight-bold">Choose Date</div> */}
 
       <div className="k-flex k-display-flex k-mb-4">
         <Calendar value={bookingDate} onChange={onDateChange} />
@@ -96,31 +104,28 @@ const AvailabilityPicker = props => {
               <button
                 key={time}
                 className="k-button k-mb-4"
-                onClick={
-                  (e) => {
-                    setSelectedTimeSlot(time)
-                    console.log(e)
-                    if (selectedTimeSlotElement) {
-                      selectedTimeSlotElement.style.backgroundColor = 'white'
-                    }
-                    setSelectedTimeSlotElement(e.target)
+                onClick={(e) => {
+                  setSelectedTimeSlot(time);
+                  if (selectedTimeSlotElement) {
+                    selectedTimeSlotElement.style.backgroundColor = 'white';
                   }
-                }
+                  setSelectedTimeSlotElement(e.target);
+                } }
               >
                 {time}
               </button>
             );
           })}
         </div>
-        {selectedTimeSlot !== null ? customerForm : null}
+        {/* {selectedTimeSlot !== null ? customerForm : null} */}
       </div>
 
-      {bookingDate && selectedTimeSlot ? (
-        <div>
-          Selected slot: {bookingDate.toDateString()} at {selectedTimeSlot}
-        </div>
-      ) : null}
-    </div>
+      {/* {bookingDate && selectedTimeSlot ? (
+      <div>
+        Selected slot: {bookingDate.toDateString()} at {selectedTimeSlot}
+      </div>
+    ) : null} */}
+    </div></>
   );
 };
 

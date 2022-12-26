@@ -1,7 +1,7 @@
 .app__navbar {
   display: flex;
   flex-direction: row;
-  background-color: #101828;
+  background-color: #272827;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;

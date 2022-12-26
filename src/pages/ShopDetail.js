@@ -18,8 +18,8 @@ const ShopDetail = () => {
 
 
     const serviceWorkerPicker = (
-        <><div className="d-flex">
-            <div className="d-flex justify-content-between w-50 flex-wrap itembox_frame">
+        <><div>
+            <div className="d-flex justify-content-between flex-wrap itembox_frame">
                 {services.map((item) => {
                     return (
                         <div
@@ -36,14 +36,14 @@ const ShopDetail = () => {
                                         setSelectedService(item);
                                     }
                                 }
-                            } }
+                            }}
                         >
                             {item}
                         </div>);
                 })}
             </div>
 
-            <div className="d-flex justify-content-between w-50 flex-wrap itembox_frame">
+            <div className="d-flex justify-content-between flex-wrap itembox_frame">
                 {workers.map(item => (
                     <div
                         className={selectedWorker == item.id ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
@@ -58,25 +58,27 @@ const ShopDetail = () => {
                                     setSelectedWorker(item.id);
                                 }
                             }
-                        } }
+                        }}
                     >
                         {item.name}
                     </div>
                 ))}
             </div>
-        </div><div>
-                <p>Selected service is {selectedService}</p>
-                <p>Selected worker is
-                    {(() => {
-                        if (selectedWorker != 0) {
-                            return " " + selectedWorker;
-                        }
-                        else {
-                            return "";
-                        }
-                    })()}
-                </p>
-            </div><button
+
+            <button
+                className="btn button danger"
+                onClick={() => {
+                    setServices(shop.services);
+                    setWorkers(shop.workers);
+                    setSelectedWorker(0);
+                    setSelectedService("");
+                }}
+            >
+                Clear
+            </button>
+        </div>
+            {/* <button
+                className="btn button"
                 onClick={() => {
                     if (selectedWorker && selectedService) {
                         console.log(selectedService + " " + selectedWorker);
@@ -86,38 +88,46 @@ const ShopDetail = () => {
                     else {
                         toast("Please select a worker and a service");
                     }
-                } }
+                }}
             >
                 Book
-            </button><button
-                onClick={() => {
-                    setServices(shop.services);
-                    setWorkers(shop.workers);
-                    setSelectedWorker(0);
-                    setSelectedService("");
-                } }
-            >
-                Clean
-            </button></>
+            </button> */}
+
+        </>
     );
 
     return (
         <>
-            <h3>{params.id}</h3>
-            <p>{shop.name}</p>
-
-            <div className="d-flex justify-content-between">
-                <div className="d-flex flex-column mx-2 align-items-start">
-                    <p>{shop.name}</p>
-                    <p>{shop.services}</p>
+            <div className="d-flex justify-content-between align-items-center shop_header">
+                <div className="d-flex align-items-center">
+                    <img src="https://www.pngitem.com/pimgs/b/188-1884281_barber-shop-logo-png.png" alt="shop logo" className="shop_logo" />
+                    <div className="d-flex flex-column align-items-start">
+                        {/* <h3>{params.id}</h3> */}
+                        <h4>{shop.name}</h4>
+                        <p>{shop.category}</p>
+                    </div>
                 </div>
-                <div className="d-flex flex-column mx-2">
+                <div>
+
                     <p>{shop.working_hours}</p>
                     <p>{shop.city} / {shop.district}</p>
+
                 </div>
             </div>
 
-            {isWorkerServicePicked ? <AvailabilityPicker /> : serviceWorkerPicker}
+
+            <div className="row">
+                <div className="col-6">
+                {serviceWorkerPicker}
+                </div>
+                <div className="col-6" >
+                {/* {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : "Select Service and Worker to see availability"} */}
+                {selectedService!="" && selectedWorker!=0 ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : "Select Service and Worker to see availability"}
+                </div>
+            </div>
+
+            
+            
 
             <ToastContainer />
         </>

@@ -37,7 +37,7 @@ const Home = () => {
     })
 
     return (
-        <>
+        
             <div className='row'>
                 <div className='col-lg-3'>
                     <div className="app__categories">
@@ -56,7 +56,7 @@ const Home = () => {
                     <ShopList shops={shops} />
                 </div>
             </div>
-        </>
+        
     )
 }
 

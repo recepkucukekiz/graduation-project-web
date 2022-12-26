@@ -10,8 +10,50 @@
 }
 
 .itembox_frame {
-    margin: 2rem;
+    margin: 1rem;
     padding: 1rem;
-    background-color: #101828;
+    background-color: #272827;
     border-radius: 25px;
+}
+
+.shop_logo {
+    max-width: 200px;
+    margin-right: 1rem;
+}
+
+.shop_header {
+    padding: 2rem;
+    margin: 1rem;
+    background-color: #272827;
+    border-radius: 25px;
+    color: white;
+}
+
+.button {
+    border: 2px solid #272827;
+    background-color: #272827;
+    color: white;
+    border-radius: 25px;
+    padding: 1rem;
+    margin: 1rem;
+    cursor:pointer;
+}
+
+.button:hover {
+    border: 2px solid #272827;
+    color: #272827;
+    border-radius: 25px;
+    padding: 1rem;
+    margin: 1rem;
+    cursor:pointer;
+}
+
+.danger {
+    border: 2px solid #a73232;
+    background-color: #a73232;
+}
+
+.danger:hover {
+    border: 2px solid #a73232;
+    color: #a73232;
 }
