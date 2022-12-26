@@ -122,11 +122,11 @@ const ShopDetail = () => {
                 </div>
                 <div className="col-6" >
                 {/* {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : "Select Service and Worker to see availability"} */}
-                {selectedService!="" && selectedWorker!=0 ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : "Select Service and Worker to see availability"}
+                {selectedService!="" && selectedWorker!=0 ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : <p className="itembox_frame" style={{color:"white"}}>Select Service and Worker to see availability</p>}
                 </div>
             </div>
 
-            
+            <div>TEST</div>
             
 
             <ToastContainer />

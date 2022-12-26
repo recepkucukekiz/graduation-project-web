@@ -1,0 +1,15 @@
+.frame {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #272827;
+    border-radius: 25px;
+    color: white;
+}
+
+.timeslot {
+    margin: 0.25rem;
+    padding: 0.25rem;
+    background-color: white;
+    border-radius: 25px;
+    color: #272827;
+}

@@ -1,5 +1,6 @@
 import { Calendar } from "@progress/kendo-react-dateinputs";
 import { useEffect, useRef, useState } from "react";
+import "./picker.css";
 
 const times = [
   "08:00 - 10:00",
@@ -69,7 +70,8 @@ const AvailabilityPicker = props => {
 
   useEffect(() => {
     if (selectedTimeSlotElement) {
-      selectedTimeSlotElement.style.backgroundColor = 'red'
+      selectedTimeSlotElement.style.backgroundColor = '#272827';
+      selectedTimeSlotElement.style.color = 'white';
     }
   }, [selectedTimeSlotElement])
 
@@ -92,7 +94,7 @@ const AvailabilityPicker = props => {
 
   return (
     <>
-    <p>You selected {props.service} from {props.worker}.</p>
+    <p className="frame">You selected {props.service} from {props.worker} {bookingDate!= null ? "for " + bookingDate.toDateString() : ""} {selectedTimeSlot}.</p>
     <div className="k-my-8">
       {/* <div className="k-mb-4 k-font-weight-bold">Choose Date</div> */}
 
@@ -103,11 +105,12 @@ const AvailabilityPicker = props => {
             return (
               <button
                 key={time}
-                className="k-button k-mb-4"
+                className="timeslot"
                 onClick={(e) => {
                   setSelectedTimeSlot(time);
                   if (selectedTimeSlotElement) {
                     selectedTimeSlotElement.style.backgroundColor = 'white';
+                    selectedTimeSlotElement.style.color = 'black';
                   }
                   setSelectedTimeSlotElement(e.target);
                 } }
@@ -125,6 +128,8 @@ const AvailabilityPicker = props => {
         Selected slot: {bookingDate.toDateString()} at {selectedTimeSlot}
       </div>
     ) : null} */}
+
+    
     </div></>
   );
 };
