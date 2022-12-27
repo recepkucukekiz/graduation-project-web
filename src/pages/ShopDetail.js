@@ -18,81 +18,60 @@ const ShopDetail = () => {
 
 
     const serviceWorkerPicker = (
-        <><div>
-            <div className="d-flex justify-content-between flex-wrap itembox_frame">
-                {services.map((item) => {
-                    return (
-                        <div
-                            className={selectedService == item ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
-                            onClick={() => {
-                                if (selectedWorker == 0) {
-                                    setWorkers(shop.workers.filter(worker => worker.services.includes(item)));
-                                    setSelectedService(item);
-                                } else {
-                                    if (selectedService == item) {
-                                        console.log("trigger");
-                                        setSelectedService("");
-                                    } else {
-                                        setSelectedService(item);
-                                    }
-                                }
-                            }}
-                        >
-                            {item}
-                        </div>);
-                })}
-            </div>
-
-            <div className="d-flex justify-content-between flex-wrap itembox_frame">
-                {workers.map(item => (
-                    <div
-                        className={selectedWorker == item.id ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
-                        onClick={() => {
-                            if (selectedService == "") {
-                                setServices(item.services);
-                                setSelectedWorker(item.id);
-                            } else {
-                                if (selectedWorker == item.id) {
-                                    setSelectedWorker(0);
-                                } else {
-                                    setSelectedWorker(item.id);
-                                }
-                            }
-                        }}
-                    >
-                        {item.name}
+        <>
+            <div className="d-flex">
+                <div className="col-lg-6">
+                    <div className="d-flex justify-content-around flex-wrap itembox_frame">
+                        {services.map((item) => {
+                            return (
+                                <div
+                                    className={selectedService == item ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
+                                    onClick={() => {
+                                        if (selectedWorker == 0) {
+                                            setWorkers(shop.workers.filter(worker => worker.services.includes(item)));
+                                            setSelectedService(item);
+                                        } else {
+                                            if (selectedService == item) {
+                                                console.log("trigger");
+                                                setSelectedService("");
+                                            } else {
+                                                setSelectedService(item);
+                                            }
+                                        }
+                                    }}
+                                >
+                                    <img src="https://www.pngitem.com/pimgs/b/188-1884281_barber-shop-logo-png.png" alt="shop logo" className="service_worker_logo" />
+                                    {item}
+                                </div>);
+                        })}
                     </div>
-                ))}
-            </div>
-
-            <button
-                className="btn button danger"
-                onClick={() => {
-                    setServices(shop.services);
-                    setWorkers(shop.workers);
-                    setSelectedWorker(0);
-                    setSelectedService("");
-                }}
-            >
-                Clear
-            </button>
+                </div>
+            
+                <div className="col-lg-6">
+                    <div className="d-flex justify-content-around flex-wrap itembox_frame">
+                        {workers.map(item => (
+                            <div
+                                className={selectedWorker == item.id ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
+                                onClick={() => {
+                                    if (selectedService == "") {
+                                        setServices(item.services);
+                                        setSelectedWorker(item.id);
+                                    } else {
+                                        if (selectedWorker == item.id) {
+                                            setSelectedWorker(0);
+                                        } else {
+                                            setSelectedWorker(item.id);
+                                        }
+                                    }
+                                }}
+                            >
+                                <img src="https://www.pngitem.com/pimgs/b/188-1884281_barber-shop-logo-png.png" alt="shop logo" className="service_worker_logo" />
+                                {item.name}
+                            </div>
+                        ))}
+                    </div>
+                </div>
         </div>
-            {/* <button
-                className="btn button"
-                onClick={() => {
-                    if (selectedWorker && selectedService) {
-                        console.log(selectedService + " " + selectedWorker);
-                        toast("service and worker selected");
-                        setIsWorkerServicePicked(true);
-                    }
-                    else {
-                        toast("Please select a worker and a service");
-                    }
-                }}
-            >
-                Book
-            </button> */}
-
         </>
     );
 
@@ -114,20 +93,54 @@ const ShopDetail = () => {
 
                 </div>
             </div>
-
-
-            <div className="row">
-                <div className="col-6">
-                {serviceWorkerPicker}
-                </div>
-                <div className="col-6" >
-                {/* {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : "Select Service and Worker to see availability"} */}
-                {selectedService!="" && selectedWorker!=0 ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : <p className="itembox_frame" style={{color:"white"}}>Select Service and Worker to see availability</p>}
-                </div>
-            </div>
-
-            <div>TEST</div>
             
+            {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> :
+                <div className="row">
+                    {serviceWorkerPicker}
+                    {/* {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : "Select Service and Worker to see availability"} */}
+                    {/* {selectedService!="" && selectedWorker!=0 ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : <p className="itembox_frame" style={{color:"white"}}>Select Service and Worker to see availability</p>} */}
+                    
+                </div>
+            }
+
+            <div>
+                <button
+                    className="btn button danger"
+                    onClick={() => {
+                        setServices(shop.services);
+                        setWorkers(shop.workers);
+                        setSelectedWorker(0);
+                        setSelectedService("");
+                    }}
+                >
+                    Clear
+                </button>
+                
+                <button
+                    className="btn button"
+                    onClick={() => {
+                        if (selectedWorker && selectedService) {
+                            console.log(selectedService + " " + selectedWorker);
+                            toast("service and worker selected");
+                            setIsWorkerServicePicked(true);
+                        }
+                        else {
+                            toast("Please select a worker and a service");
+                        }
+                    }}
+                >
+                    Book
+                </button>
+
+                <button
+                    className="btn button"
+                    onClick={() => {
+                        setIsWorkerServicePicked(false);
+                    }}
+                >
+                    Back
+                </button>
+            </div>
 
             <ToastContainer />
         </>

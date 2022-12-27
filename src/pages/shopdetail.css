@@ -1,6 +1,9 @@
 .shopdetail_itembox {
+    display: flex;
+    flex-direction: column;
     background-color: white;
     padding: 1rem;
+    margin: 1rem;
     border-radius: 25px;
     cursor:pointer;
 }
@@ -56,4 +59,8 @@
 .danger:hover {
     border: 2px solid #a73232;
     color: #a73232;
+}
+
+.service_worker_logo{
+    max-width: 80px;
 }
