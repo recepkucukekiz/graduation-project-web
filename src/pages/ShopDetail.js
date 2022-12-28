@@ -46,7 +46,7 @@ const ShopDetail = () => {
                         })}
                     </div>
                 </div>
-            
+
                 <div className="col-lg-6">
                     <div className="d-flex justify-content-around flex-wrap itembox_frame">
                         {workers.map(item => (
@@ -71,7 +71,7 @@ const ShopDetail = () => {
                         ))}
                     </div>
                 </div>
-        </div>
+            </div>
         </>
     );
 
@@ -93,53 +93,58 @@ const ShopDetail = () => {
 
                 </div>
             </div>
-            
+
             {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> :
                 <div className="row">
                     {serviceWorkerPicker}
                     {/* {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : "Select Service and Worker to see availability"} */}
                     {/* {selectedService!="" && selectedWorker!=0 ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : <p className="itembox_frame" style={{color:"white"}}>Select Service and Worker to see availability</p>} */}
-                    
+
                 </div>
             }
 
             <div>
-                <button
-                    className="btn button danger"
-                    onClick={() => {
-                        setServices(shop.services);
-                        setWorkers(shop.workers);
-                        setSelectedWorker(0);
-                        setSelectedService("");
-                    }}
-                >
-                    Clear
-                </button>
-                
-                <button
-                    className="btn button"
-                    onClick={() => {
-                        if (selectedWorker && selectedService) {
-                            console.log(selectedService + " " + selectedWorker);
-                            toast("service and worker selected");
-                            setIsWorkerServicePicked(true);
-                        }
-                        else {
-                            toast("Please select a worker and a service");
-                        }
-                    }}
-                >
-                    Book
-                </button>
+                {isWorkerServicePicked
+                    ? <><button
+                        className="btn button"
+                        onClick={() => {
+                            setIsWorkerServicePicked(false);
+                            setSelectedService("");
+                            setSelectedWorker(0);
+                            setServices(shop.services);
+                            setWorkers(shop.workers);
+                        }}
+                    >
+                        Back
+                    </button></>
+                    : <><button
+                        className="btn button danger"
+                        onClick={() => {
+                            setServices(shop.services);
+                            setWorkers(shop.workers);
+                            setSelectedWorker(0);
+                            setSelectedService("");
+                        }}
+                    >
+                        Clear
+                    </button><button
+                        className="btn button"
+                        onClick={() => {
+                            if (selectedWorker && selectedService) {
+                                console.log(selectedService + " " + selectedWorker);
+                                toast("service and worker selected");
+                                setIsWorkerServicePicked(true);
+                            }
+                            else {
+                                toast("Please select a worker and a service");
+                            }
+                        }}
+                    >
+                            Check Availability
+                        </button></>
+                }
 
-                <button
-                    className="btn button"
-                    onClick={() => {
-                        setIsWorkerServicePicked(false);
-                    }}
-                >
-                    Back
-                </button>
+
             </div>
 
             <ToastContainer />

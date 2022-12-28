@@ -81,13 +81,12 @@ const AvailabilityPicker = props => {
     console.log(e.value.toDateString());
   };
 
-  const customerForm = (
+  const confirmationView = (
     <>
-      <div>
-        Selected slot: {bookingDate ? bookingDate.toDateString() : ""} at {selectedTimeSlot}
-        <p>{props.worker}</p>
-        <p>{props.service}</p>
-      </div>
+      <p>
+      You selected {props.service} from {props.worker} {bookingDate!= null ? "for " + bookingDate.toDateString() : ""} {selectedTimeSlot}.
+      </p>
+      <p>Are you sure about confirm booking?</p>
 
     </>
   );
@@ -98,7 +97,7 @@ const AvailabilityPicker = props => {
     <div className="k-my-8">
       {/* <div className="k-mb-4 k-font-weight-bold">Choose Date</div> */}
 
-      <div className="k-flex k-display-flex k-mb-4">
+      <div className="d-flex justify-content-around">
         <Calendar value={bookingDate} onChange={onDateChange} />
         <div className="k-ml-4 k-display-flex k-flex-col">
           {bookingTimes.map(time => {
@@ -120,7 +119,7 @@ const AvailabilityPicker = props => {
             );
           })}
         </div>
-        {/* {selectedTimeSlot !== null ? customerForm : null} */}
+        {selectedTimeSlot !== null ? confirmationView : null}
       </div>
 
       {/* {bookingDate && selectedTimeSlot ? (
@@ -129,7 +128,7 @@ const AvailabilityPicker = props => {
       </div>
     ) : null} */}
 
-    
+
     </div></>
   );
 };
