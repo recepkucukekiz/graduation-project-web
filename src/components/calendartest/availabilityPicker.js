@@ -49,6 +49,18 @@ const AvailabilityPicker = props => {
   const timeSlotCacheRef = useRef(new Map());
   const [selectedTimeSlotElement, setSelectedTimeSlotElement] = useState(null);
 
+
+  function makeBooking () {
+    if (!bookingDate || !selectedTimeSlot) {
+      alert("Please select a date and time slot");
+      return;
+    }
+
+    alert(
+      `You have booked a slot on ${bookingDate.toDateString()} at ${selectedTimeSlot}`
+    );
+  };
+
   useEffect(() => {
     // Bail out if there is no date selected
     if (!bookingDate) return;
@@ -87,7 +99,11 @@ const AvailabilityPicker = props => {
       You selected {props.service} from {props.worker} {bookingDate!= null ? "for " + bookingDate.toDateString() : ""} {selectedTimeSlot}.
       </p>
       <p>Are you sure about confirm booking?</p>
+      <input type="text" placeholder="Enter your name and surname" className="input-box" />
+      <input type="text" placeholder="Enter your phone number" className="input-box" />
+      <input type="text" placeholder="Enter your email" className="input-box" />
 
+      <input type="button" value="Confirm" className="btn button" />
     </>
   );
 
@@ -98,28 +114,42 @@ const AvailabilityPicker = props => {
       {/* <div className="k-mb-4 k-font-weight-bold">Choose Date</div> */}
 
       <div className="d-flex justify-content-around">
-        <Calendar value={bookingDate} onChange={onDateChange} />
-        <div className="k-ml-4 k-display-flex k-flex-col">
-          {bookingTimes.map(time => {
-            return (
-              <button
-                key={time}
-                className="timeslot"
-                onClick={(e) => {
-                  setSelectedTimeSlot(time);
-                  if (selectedTimeSlotElement) {
-                    selectedTimeSlotElement.style.backgroundColor = 'white';
-                    selectedTimeSlotElement.style.color = 'black';
-                  }
-                  setSelectedTimeSlotElement(e.target);
-                } }
-              >
-                {time}
-              </button>
-            );
-          })}
+
+        <div className="col-lg-4">
+          <Calendar value={bookingDate} onChange={onDateChange} />
         </div>
-        {selectedTimeSlot !== null ? confirmationView : null}
+
+        <div className="col-lg-4">
+        {bookingDate ? 
+          
+            <div className="k-ml-4 k-display-flex k-flex-col">
+            {bookingTimes.map(time => {
+              return (
+                <button
+                  key={time}
+                  className="timeslot"
+                  onClick={(e) => {
+                    setSelectedTimeSlot(time);
+                    if (selectedTimeSlotElement) {
+                      selectedTimeSlotElement.style.backgroundColor = 'white';
+                      selectedTimeSlotElement.style.color = 'black';
+                    }
+                    setSelectedTimeSlotElement(e.target);
+                  } }
+                >
+                  {time}
+                </button>
+              );
+            })}
+            </div>
+          
+        : "Select a date to see available time slots"}
+        </div>
+        
+        <div className="col-lg-4" style={{"padding-left":"2rem"}}>
+          {selectedTimeSlot !== null ? confirmationView : "Select time slot"}
+        </div>
+
       </div>
 
       {/* {bookingDate && selectedTimeSlot ? (

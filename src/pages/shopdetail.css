@@ -37,7 +37,7 @@
     background-color: #272827;
     color: white;
     border-radius: 25px;
-    padding: 1rem;
+    padding: 0.5rem;
     margin: 1rem;
     cursor:pointer;
 }
@@ -46,7 +46,7 @@
     border: 2px solid #272827;
     color: #272827;
     border-radius: 25px;
-    padding: 1rem;
+    padding: 0.5rem;
     margin: 1rem;
     cursor:pointer;
 }
