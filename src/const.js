@@ -4,7 +4,7 @@ var data = [
         "name": "Mehmet Berber",
         "category": "Berber",
         "services": ["Saç", "Sakal", "Fön", "Maske", "Masaj", "Ense", "Ağda"],
-        "city": "Adana",
+        "city": "Muğla",
         "district": "Seyhan",
         "working_hours": "8.00-16.00",
         "workers": [

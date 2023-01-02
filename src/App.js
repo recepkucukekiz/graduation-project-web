@@ -18,6 +18,7 @@ import PickDateOfBirth from './components/calendartest/PickDateOfBirth';
 import Calendarv3 from './components/calendartest/Calendarv3';
 import Dashboard from './pages/management/dashboard/dashboard';
 import Edit from './pages/management/editshop/editshop';
+import EditWorker from './pages/management/editworker/editworker';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/edit" element={<Edit />} />
+            <Route path="/editworker/:id" element={<EditWorker />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

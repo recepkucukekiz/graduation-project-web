@@ -4,6 +4,7 @@ import data from '../../../const';
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+    const navigate = useNavigate();
 
     function workerServiceList(id) {
         var arr = [];
@@ -28,7 +29,12 @@ const Dashboard = () => {
                     <div>
                         {workerServiceList(item.id)}
                     </div>
-                    <button className='btn btn-primary'>Edit</button>
+                    <button className='btn btn-primary'
+                        onClick={() => {
+                            console.log(item.id);
+                            navigate(`/editworker/${item.id}`);
+                        }}
+                    >Edit</button>
                     <button className='btn btn-danger'>Delete</button>
                     <button className='btn btn-success'>Show Calendar</button>
                 </div>
@@ -37,7 +43,7 @@ const Dashboard = () => {
         return arr;
     }
 
-    const navigate = useNavigate();
+
 
     return (
         <>
@@ -46,7 +52,7 @@ const Dashboard = () => {
                     <div className='shape_box fd-column'>
                         <div className='d-flex justify-content-end w-100'>
                             {/* <img src="https://img.icons8.com/ios/50/null/pencil--v1.png" /> */}
-                            <button 
+                            <button
                                 className='btn btn-light'
                                 onClick={() => {
                                      navigate("/edit/")

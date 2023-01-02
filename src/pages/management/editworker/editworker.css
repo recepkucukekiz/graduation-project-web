@@ -1,0 +1,12 @@
+.worker-input {
+    width: 100%;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.worker-input input {
+    border-radius: 25px;
+    padding: 1rem;
+}

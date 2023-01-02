@@ -1,16 +1,16 @@
 import React from "react";
 
-const Edit = () => {
+const Edit = ({shop}) => {
 
     const handleSubmit = (event) => {
         //Prevent page reload
         event.preventDefault();
-    
+
         // var { uname, pass } = document.forms[0];
-    
+
         // // Find user login info
         // const userData = database.find((user) => user.username === uname.value);
-    
+
         // // Compare user info
         // if (userData) {
         //   if (userData.password !== pass.value) {

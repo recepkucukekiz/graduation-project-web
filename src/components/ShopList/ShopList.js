@@ -8,7 +8,7 @@ const ShopList = ({shops}) => {
     const navigate = useNavigate();
     shops.map((shop, index) => {
         shopView.push(
-            <div className="shoplist_item" 
+            <div className="shoplist_item"
                 onClick={() => {
                     console.log("clicked" + shop.id)
                     navigate("/shop/" + shop.id)
@@ -38,8 +38,6 @@ const ShopList = ({shops}) => {
     return (
         <>
             <div className="app__shoplist">
-                {shopView}
-                {shopView}
                 {shopView}
             </div>
         </>

@@ -65,6 +65,7 @@ class Calendar extends Component {
             {name: "Room 5", id: "R5"},
             {name: "Room 6", id: "R6"},
             {name: "Room 7", id: "R7"},
+            {name: "Room 7", id: "R8"},
           ]
         },
         { name: "People", id: "people", resources: [
@@ -181,7 +182,7 @@ class Calendar extends Component {
         <div className={"calendar"}>
 
           <div className={"toolbar"}>
-            {/* <ResourceGroups onChange={args => this.groupChanged(args.selected)} items={this.loadGroups()}></ResourceGroups> */}
+            <ResourceGroups onChange={args => this.groupChanged(args.selected)} items={this.loadGroups()}></ResourceGroups>
             <span>Day:</span>
             <button onClick={ev => this.previous()}>Previous</button>
             <button onClick={ev => this.next()}>Next</button>
