@@ -51,7 +51,7 @@ var data = [
         ]
     },
     {
-        "id": 1,
+        "id": 2,
         "name": "Ahmet Berber",
         "category": "Güzellik Salonu",
         "services": ["Saç", "Sakal", "Fön", "Maske", "Masaj", "Ense"],
@@ -102,7 +102,7 @@ var data = [
         ]
     },
     {
-        "id": 1,
+        "id": 3,
         "name": "Hasan Berber",
         "category": "Kuaför",
         "services": ["Saç", "Sakal", "Fön", "Maske", "Masaj", "Ense"],
@@ -153,7 +153,7 @@ var data = [
         ]
     },
     {
-        "id": 1,
+        "id": 4,
         "name": "Makkas Berber",
         "category": "Psikolog",
         "services": ["Saç", "Sakal", "Fön", "Maske", "Masaj", "Ense"],

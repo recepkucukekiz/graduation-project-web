@@ -6,8 +6,10 @@ import './editworker.css';
 
 const EditWorker = () => {
     let params = useParams();
-    var worker = data.filter(shop => shop.id == params.id)[0].workers.filter(worker => worker.id == params.id)[0];
+    var worker = data.filter(shop => shop.id == 1)[0].workers.filter(worker => worker.id == params.id)[0];
     // worker = worker[0];
+    
+    console.log(worker);
 
     const navigate = useNavigate();
     const [name, setName] = useState(worker.name);

@@ -1,10 +1,29 @@
 import React from 'react'
+import { useState } from 'react';
 import "./dashboard.css";
 import data from '../../../const';
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
+import DeleteConfirmation from '../../../components/DeleteConfirm/DeleteConfirmation';
 
 const Dashboard = () => {
+    const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
+
     const navigate = useNavigate();
+
+    // Hide the modal
+    const hideConfirmationModal = () => {
+        setDisplayConfirmationModal(false);
+    };
+
+    // Handle the actual deletion of the item
+    const submitDelete = () => {
+        setDisplayConfirmationModal(false);
+    };
+
+    const showDeleteModal = () => {
+
+        setDisplayConfirmationModal(true);
+    };
 
     function workerServiceList(id) {
         var arr = [];
@@ -35,15 +54,14 @@ const Dashboard = () => {
                             navigate(`/editworker/${item.id}`);
                         }}
                     >Edit</button>
-                    <button className='btn btn-danger'>Delete</button>
+                    <button className='btn btn-danger' onClick={() => showDeleteModal()} >Delete</button>
+                    <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={submitDelete} hideModal={hideConfirmationModal} message={"abcdef"} />
                     <button className='btn btn-success'>Show Calendar</button>
                 </div>
             );
         });
         return arr;
     }
-
-
 
     return (
         <>
@@ -55,7 +73,7 @@ const Dashboard = () => {
                             <button
                                 className='btn btn-light'
                                 onClick={() => {
-                                     navigate("/edit/")
+                                    navigate("/edit/")
                                 }}
                             >
                                 Edit
