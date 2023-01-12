@@ -101,59 +101,67 @@ const Dashboard = () => {
         return arr;
     }
 
-    return (
-        <>
-            <div className='row'>
-                <div className='col-lg-3'>
-                    <div className='shape_box fd-column'>
-                        <div className='d-flex justify-content-end w-100'>
-                            {/* <img src="https://img.icons8.com/ios/50/null/pencil--v1.png" /> */}
-                            <button
-                                className='btn btn-light'
-                                onClick={() => {
-                                    navigate("/edit/")
-                                }}
-                            >
-                                Edit
-                            </button>
-                        </div>
-                        <img src="https://www.transparentpng.com/thumb/shopping/hR31Wp-shopping-markets-vector-image.png" className='w-100 p-5' />
-                        <h5>Suha berber</h5>
-                        <p>İbo Osman Cad. 70095 Sk. No:6</p>
-                        <p>Seyhan/Adana</p>
-                        <p>Telefon: 0 (322) 123 45 67</p>
-                        <p>08:00 - 16:00</p>
+    const checkIsLogged = () => {
+        if (localStorage.getItem("user") != null) {
+            return (<div className='row'>
+            <div className='col-lg-3'>
+                <div className='shape_box fd-column'>
+                    <div className='d-flex justify-content-end w-100'>
+                        {/* <img src="https://img.icons8.com/ios/50/null/pencil--v1.png" /> */}
+                        <button
+                            className='btn btn-light'
+                            onClick={() => {
+                                navigate("/edit/")
+                            }}
+                        >
+                            Edit
+                        </button>
                     </div>
-                </div>
-                <div className='col-lg-9'>
-                    <div className='row'>
-                        <div className='col-lg-6'>
-                            <div className='shape_box d-flex justify-content-between'>
-                                <h5>Today's Appointments</h5>
-                                <p>+8</p>
-                            </div>
-                        </div>
-                        <div className='col-lg-6'>
-                            <div className='shape_box d-flex justify-content-between'>
-                                <h5>Haftalık Doluluk Oranı</h5>
-                                <p>70%</p>
-                            </div>
-                        </div>
-                        {/* <div className='col-lg-4'>
-                            <div className='shape_box'>
-                                <h5>Haftalık Doluluk Oranı</h5>
-                                <p>70%</p>
-                            </div>
-                        </div> */}
-                    </div>
-                    <div className='d-flex justify-item-start p-4'>
-                        <h3>Workers</h3>
-                    </div>
-                    <div>
-                        {workerList()}
-                    </div>
+                    <img src="https://www.transparentpng.com/thumb/shopping/hR31Wp-shopping-markets-vector-image.png" className='w-100 p-5' />
+                    <h5>Suha berber</h5>
+                    <p>İbo Osman Cad. 70095 Sk. No:6</p>
+                    <p>Seyhan/Adana</p>
+                    <p>Telefon: 0 (322) 123 45 67</p>
+                    <p>08:00 - 16:00</p>
                 </div>
             </div>
+            <div className='col-lg-9'>
+                <div className='row'>
+                    <div className='col-lg-6'>
+                        <div className='shape_box d-flex justify-content-between'>
+                            <h5>Today's Appointments</h5>
+                            <p>+8</p>
+                        </div>
+                    </div>
+                    <div className='col-lg-6'>
+                        <div className='shape_box d-flex justify-content-between'>
+                            <h5>Haftalık Doluluk Oranı</h5>
+                            <p>70%</p>
+                        </div>
+                    </div>
+                    {/* <div className='col-lg-4'>
+                        <div className='shape_box'>
+                            <h5>Haftalık Doluluk Oranı</h5>
+                            <p>70%</p>
+                        </div>
+                    </div> */}
+                </div>
+                <div className='d-flex justify-item-start p-4'>
+                    <h3>Workers</h3>
+                </div>
+                <div>
+                    {workerList()}
+                </div>
+            </div>
+        </div>)
+        } else {
+            window.location.href = "/login";
+        }
+    }
+
+    return (
+        <>
+            {checkIsLogged()}
         </>
     )
 }

@@ -39,7 +39,9 @@ const Login = () => {
         // Invalid password
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
+        localStorage.setItem('user', JSON.stringify(userData));
         setIsSubmitted(true);
+        window.location.reload();
       }
     } else {
       // Username not found
@@ -74,13 +76,16 @@ const Login = () => {
     </div>
   );
 
+  const checkIsLogged = () => {
+    if (localStorage.getItem('user') != null) {
+      window.location.href = "/home";
+    } else {
+      return renderForm;
+    }
+  }
+
   return (
-    <div className="row login-page">
-      <div className="login-form col-lg-4">
-        <div className="title">Sign In</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
-      </div>
-    </div>
+    <>{checkIsLogged()}</>
   );
 }
 

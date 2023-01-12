@@ -13,6 +13,22 @@ const CustomLink = ({ to, pageName }) => {
 };
 
 const Navbar = () => {
+    const isLoggedin = () => {
+        if (localStorage.getItem("user") != null) {
+            return <li className={`item`}>
+            <span
+                onClick={() => {
+                    localStorage.removeItem("user");
+                    window.location.reload();
+                }}
+            >
+                Logout
+            </span>
+          </li>
+        } else {
+            return <CustomLink to="/login" pageName="Login" />
+        }
+    }
   return (
     <nav className="app__navbar">
       <Link className="app__header" to="/">
@@ -20,12 +36,10 @@ const Navbar = () => {
       </Link>
       <ul className="nav__list">
         <CustomLink to="/about" pageName="About" />
-        <CustomLink to="/calendar" pageName="Calendar" />
-        <CustomLink to="/calendarv2" pageName="CalendarV2" />
         <CustomLink to="/login" pageName="Login" />
         <CustomLink to="/signup" pageName="Sign Up" />
         <CustomLink to="/dashboard" pageName="Dashboard" />
-        <CustomLink to="/calendernew" pageName="New Calendar" />
+        { isLoggedin() }
       </ul>
     </nav>
   );

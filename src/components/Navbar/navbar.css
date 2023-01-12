@@ -36,6 +36,13 @@
   border-radius: 5px;
 }
 
+.app__navbar .nav__list .item span {
+    font-size: 16px;
+    color: #f2f4f7;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
 .app__navbar .nav__list .item:hover {
   background-color: #344054;
 }
