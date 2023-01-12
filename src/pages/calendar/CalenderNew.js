@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { useParams } from 'react-router-dom';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
 // import "./CalendarStyles.css";
 
@@ -14,9 +15,12 @@ const styles = {
   }
 };
 
-class CalendarNew extends Component {
+class Calendar extends Component {
+
 
   constructor(props) {
+    const userId  = props.userId;
+    console.log(userId);
     super(props);
     this.calendarRef = React.createRef();
     this.state = {
@@ -115,6 +119,17 @@ class CalendarNew extends Component {
       </div>
     );
   }
+}
+
+function CalendarNew() {
+
+    const { id } = useParams();
+
+    return (
+        <div>
+            <Calendar userId={id} />
+        </div>
+    );
 }
 
 export default CalendarNew;

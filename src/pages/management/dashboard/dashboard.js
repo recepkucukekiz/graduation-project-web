@@ -4,6 +4,7 @@ import "./dashboard.css";
 import data from '../../../const';
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import DeleteConfirmation from '../../../components/DeleteConfirm/DeleteConfirmation';
+import { Modal, Button } from "react-bootstrap";
 
 const Dashboard = () => {
     const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
@@ -16,8 +17,8 @@ const Dashboard = () => {
     };
 
     // Handle the actual deletion of the item
-    const submitDelete = () => {
-        setDisplayConfirmationModal(false);
+    const submitDelete = (abcdef) => {
+        console.log(abcdef);
     };
 
     const showDeleteModal = () => {
@@ -54,9 +55,46 @@ const Dashboard = () => {
                             navigate(`/editworker/${item.id}`);
                         }}
                     >Edit</button>
-                    <button className='btn btn-danger' onClick={() => showDeleteModal()} >Delete</button>
-                    <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={submitDelete} hideModal={hideConfirmationModal} message={"abcdef"} />
-                    <button className='btn btn-success'>Show Calendar</button>
+
+                    {/* <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={submitDelete} hideModal={hideConfirmationModal} message={"abcdef"} id={item.id} /> */}
+
+                    <button
+                        className='btn btn-danger'
+                        onClick={
+                            () => {
+                                submitDelete(item.id)
+                            }
+                        }
+                    >
+                        Delete
+                    </button>
+
+                    {/* <Modal show={displayConfirmationModal} onHide={hideConfirmationModal}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Delete Confirmation</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body><div className="alert alert-danger">{"jsagjsbc"}</div></Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="default" onClick={hideConfirmationModal}>
+                            Cancel
+                        </Button>
+                        <Button variant="danger" onClick={() => submitDelete(item.name) }>
+                            Delete
+                        </Button>
+                        <button
+                            onClick={() => submitDelete(item.name) }
+                        >Delete
+                        </button>
+                        </Modal.Footer>
+                    </Modal> */}
+
+                    <button
+                        className='btn btn-success'
+                        onClick={() => {
+                            console.log(item.id);
+                            navigate(`/calendernew/${item.id}`);
+                        }}
+                    >Show Calendar</button>
                 </div>
             );
         });

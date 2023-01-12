@@ -35,7 +35,7 @@ function App() {
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/calendarv2" element={<Calendarv2 />} />
             <Route path="/calendarv3" element={<Calendarv3 />} />
-            <Route path="/calendernew" element={<CalendarNew />} />
+            <Route path="/calendernew/:id" element={<CalendarNew />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard />} />
