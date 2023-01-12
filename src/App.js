@@ -19,6 +19,7 @@ import Calendarv3 from './components/calendartest/Calendarv3';
 import Dashboard from './pages/management/dashboard/dashboard';
 import Edit from './pages/management/editshop/editshop';
 import EditWorker from './pages/management/editworker/editworker';
+import CalendarNew from './pages/calendar/CalenderNew';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/calendarv2" element={<Calendarv2 />} />
             <Route path="/calendarv3" element={<Calendarv3 />} />
+            <Route path="/calendernew" element={<CalendarNew />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard />} />

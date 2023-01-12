@@ -25,6 +25,7 @@ const Navbar = () => {
         <CustomLink to="/login" pageName="Login" />
         <CustomLink to="/signup" pageName="Sign Up" />
         <CustomLink to="/dashboard" pageName="Dashboard" />
+        <CustomLink to="/calendernew" pageName="New Calendar" />
       </ul>
     </nav>
   );
