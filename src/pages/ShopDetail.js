@@ -1,23 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import data from "../const";
 import { ToastContainer, toast } from 'react-toastify';
 import "./shopdetail.css";
 import AvailabilityPicker from "../components/calendartest/availabilityPicker";
+import { getShopById, getServiceByShopId, getByShopId } from "../services/shopservice";
 
 const ShopDetail = () => {
     let params = useParams();
-    var shop = data.filter(shop => shop.id == params.id);
-    shop = shop[0];
+    const [shop, setShop] = useState(null);
+    const [services, setServices] = useState(null);
+    const [rawServices, setRawServices] = useState(null);
+    const [workers, setWorkers] = useState();
+    const [rawWorkers, setRawWorkers] = useState();
 
-    const [selectedWorker, setSelectedWorker] = useState(0);
-    const [selectedService, setSelectedService] = useState("");
-    const [services, setServices] = useState(shop.services);
-    const [workers, setWorkers] = useState(shop.workers);
+    const [selectedWorker, setSelectedWorker] = useState(null);
+    const [selectedService, setSelectedService] = useState(null);
     const [isWorkerServicePicked, setIsWorkerServicePicked] = useState(false);
 
+    useEffect(() => {
+        async function fetchData(){
+            getShopById(params.id).then((response) => {
+                console.log(response)
+                setShop(response);
+            }).then(() => {
+                getServiceByShopId(params.id).then((response) => {
+                    setServices(response);
+                    setRawServices(response);
+                    console.log(response);
+                }).then(() => {
+                    getByShopId(params.id).then((response) => {
+                        setWorkers(response);
+                        setRawWorkers(response);
+                        console.log(response);
+                    })
+                })
+            })
+        }
+        fetchData();
+    }, []);
 
-    const serviceWorkerPicker = (
+
+    const serviceWorkerPicker = () => {
+        return (
         <>
             <div className="d-flex">
                 <div className="col-lg-6">
@@ -25,23 +49,23 @@ const ShopDetail = () => {
                         {services.map((item) => {
                             return (
                                 <div
-                                    className={selectedService == item ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
+                                    className={selectedService == item.id ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
                                     onClick={() => {
                                         if (selectedWorker == 0) {
-                                            setWorkers(shop.workers.filter(worker => worker.services.includes(item)));
-                                            setSelectedService(item);
+                                            // setWorkers(shop.workers.filter(worker => worker.services.includes(item)));
+                                            setSelectedService(item.id);
                                         } else {
-                                            if (selectedService == item) {
+                                            if (selectedService == item.id) {
                                                 console.log("trigger");
-                                                setSelectedService("");
+                                                setSelectedService(null);
                                             } else {
-                                                setSelectedService(item);
+                                                setSelectedService(item.id);
                                             }
                                         }
                                     }}
                                 >
                                     <img src="https://www.pngitem.com/pimgs/b/188-1884281_barber-shop-logo-png.png" alt="shop logo" className="service_worker_logo" />
-                                    {item}
+                                    {item.name}
                                 </div>);
                         })}
                     </div>
@@ -54,11 +78,11 @@ const ShopDetail = () => {
                                 className={selectedWorker == item.id ? "selected_itembox shopdetail_itembox" : "shopdetail_itembox"}
                                 onClick={() => {
                                     if (selectedService == "") {
-                                        setServices(item.services);
+                                        // setServices(item.services);
                                         setSelectedWorker(item.id);
                                     } else {
                                         if (selectedWorker == item.id) {
-                                            setSelectedWorker(0);
+                                            setSelectedWorker(null);
                                         } else {
                                             setSelectedWorker(item.id);
                                         }
@@ -73,34 +97,34 @@ const ShopDetail = () => {
                 </div>
             </div>
         </>
-    );
+        );
+    };
 
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center shop_header">
+            {shop && <div className="d-flex justify-content-between align-items-center shop_header">
                 <div className="d-flex align-items-center">
                     <img src="https://www.pngitem.com/pimgs/b/188-1884281_barber-shop-logo-png.png" alt="shop logo" className="shop_logo" />
                     <div className="d-flex flex-column align-items-start">
                         {/* <h3>{params.id}</h3> */}
                         <h4>{shop.name}</h4>
                         <p>{shop.category}</p>
+                        <p>{shop.description}</p>
                     </div>
                 </div>
                 <div>
-
-                    <p>{shop.working_hours}</p>
-                    <p>{shop.city} / {shop.district}</p>
+                    <p>{shop.email}</p>
+                    <p>{shop.workingHours}</p>
+                    <p>{shop.city} / {shop.province}</p>
 
                 </div>
-            </div>
+            </div>}
 
-            {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> :
+
+            {workers && (isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} workingTime={shop.workingHours} /> :
                 <div className="row">
-                    {serviceWorkerPicker}
-                    {/* {isWorkerServicePicked ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : "Select Service and Worker to see availability"} */}
-                    {/* {selectedService!="" && selectedWorker!=0 ? <AvailabilityPicker worker={selectedWorker} service={selectedService} /> : <p className="itembox_frame" style={{color:"white"}}>Select Service and Worker to see availability</p>} */}
-
-                </div>
+                    {serviceWorkerPicker()}
+                </div>)
             }
 
             <div>
@@ -109,10 +133,10 @@ const ShopDetail = () => {
                         className="btn button"
                         onClick={() => {
                             setIsWorkerServicePicked(false);
-                            setSelectedService("");
-                            setSelectedWorker(0);
-                            setServices(shop.services);
-                            setWorkers(shop.workers);
+                            setSelectedService(null);
+                            setSelectedWorker(null);
+                            setServices(rawServices);
+                            setWorkers(rawWorkers);
                         }}
                     >
                         Back
@@ -120,10 +144,10 @@ const ShopDetail = () => {
                     : <><button
                         className="btn button danger"
                         onClick={() => {
-                            setServices(shop.services);
-                            setWorkers(shop.workers);
-                            setSelectedWorker(0);
-                            setSelectedService("");
+                            setServices(rawServices);
+                            setWorkers(rawWorkers);
+                            setSelectedWorker(null);
+                            setSelectedService(null);
                         }}
                     >
                         Clear

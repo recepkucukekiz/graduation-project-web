@@ -1,5 +1,6 @@
 import { Calendar } from "@progress/kendo-react-dateinputs";
 import { useEffect, useRef, useState } from "react";
+import { createCustomer, customerObjbuilder, appointmentObjBuilder,createAppointment } from "../../services/shopservice";
 import "./picker.css";
 
 const times = [
@@ -16,30 +17,31 @@ const getRandomNumInRange = (min, max) => {
 };
 
 const pickSlotTimes = times => {
-    // Get a random number that will indicate how many time slots we pick
-    const timesToPick = getRandomNumInRange(0, times.length);
+    return times;
+    // // Get a random number that will indicate how many time slots we pick
+    // const timesToPick = getRandomNumInRange(0, times.length);
 
-    // If the random picked is the maximum possible then return all times
-    if (timesToPick === times.length - 1) {
-        return times;
-    }
+    // // If the random picked is the maximum possible then return all times
+    // if (timesToPick === times.length - 1) {
+    //     return times;
+    // }
 
-    let timesPicked = [];
+    // let timesPicked = [];
 
-    // Loop until we have picked specified number of times
-    while (timesToPick !== timesPicked.length - 1) {
-        // Get a new index and time
-        const index = getRandomNumInRange(0, times.length);
-        const selectedTime = times[index];
-        // If we already picked that time we continue
-        // as we don't want duplicated
-        if (timesPicked.includes(selectedTime)) continue;
-        // Keep the time
-        timesPicked.push(selectedTime);
-    }
+    // // Loop until we have picked specified number of times
+    // while (timesToPick !== timesPicked.length - 1) {
+    //     // Get a new index and time
+    //     const index = getRandomNumInRange(0, times.length);
+    //     const selectedTime = times[index];
+    //     // If we already picked that time we continue
+    //     // as we don't want duplicated
+    //     if (timesPicked.includes(selectedTime)) continue;
+    //     // Keep the time
+    //     timesPicked.push(selectedTime);
+    // }
 
-    // We need to sort the times, as they may not be in a correct order
-    return timesPicked.sort();
+    // // We need to sort the times, as they may not be in a correct order
+    // return timesPicked.sort();
 };
 
 const AvailabilityPicker = props => {
@@ -49,15 +51,36 @@ const AvailabilityPicker = props => {
     const timeSlotCacheRef = useRef(new Map());
     const [selectedTimeSlotElement, setSelectedTimeSlotElement] = useState(null);
     const [customerName, setCustomerName] = useState(null);
+    const [customerSurname, setCustomerSurname] = useState(null);
     const [customerPhone, setCustomerPhone] = useState(null);
     const [customerEmail, setCustomerEmail] = useState(null);
+    const [customerResponse, setCustomerResponse] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
 
+    console.log(
+        `You selected ${props.service} from ${props.worker}`
+    );
 
     function makeBooking() {
         if (!bookingDate || !selectedTimeSlot || !customerName || !customerPhone || !customerEmail) {
             console.log("Please select a date and time slot and enter your name, phone and email.");
             return;
         }
+
+        var customerObj = customerObjbuilder(customerName, customerSurname, customerEmail, customerPhone)
+        var appointmentObj = appointmentObjBuilder(selectedTimeSlot, selectedTimeSlot, bookingDate, 0, props.worker)
+        createCustomer(customerObj).then((response) => {
+            setCustomerResponse(response)
+            appointmentObj.customerId = response.customerId
+            console.log(response)
+        }).then(() => {
+            console.log(appointmentObj)
+            createAppointment(appointmentObj).then((response) => {
+                setShowPopup( showPopup => !showPopup)
+                console.log(response)
+            })
+        })
+
 
         console.log(
             `You have booked a slot on ${bookingDate.toDateString()} at ${selectedTimeSlot} for ${props.service} from ${props.worker} with ${customerName} ${customerPhone} ${customerEmail}`
@@ -75,7 +98,7 @@ const AvailabilityPicker = props => {
 
         // If we have no cached time slots then pick new ones
         if (!newBookingTimes) {
-            newBookingTimes = pickSlotTimes(times);
+            newBookingTimes = pickSlotTimes1();
             // Update cache with new time slots for the selected date
             timeSlotCacheRef.current.set(bookingDate.toDateString(), newBookingTimes);
         }
@@ -95,6 +118,22 @@ const AvailabilityPicker = props => {
         setBookingDate(e.value);
         console.log(e.value.toDateString());
     };
+
+    const pickSlotTimes1 = () => {
+        var wt = props.workingTime
+        console.log(wt);
+        var start = wt.split("-")[0]
+        var end = wt.split("-")[1]
+        var startHour = parseInt(start.split(":")[0])
+        var endHour = parseInt(end.split(":")[0])
+
+        var timesArr = []
+        for (var i = startHour; i < endHour; i++) {
+            timesArr.push(i + ":00 - " + (i + 1) + ":00")
+        }
+
+        return timesArr
+    }
 
     const confirmationView = (
         <>
@@ -144,6 +183,7 @@ const AvailabilityPicker = props => {
 
     return (
         <>
+        {showPopup ? <div>abjkdch</div> : null}
             <p className="frame">You selected {props.service} from {props.worker} {bookingDate != null ? "for " + bookingDate.toDateString() : ""} {selectedTimeSlot}.</p>
             <div className="k-my-8">
                 {/* <div className="k-mb-4 k-font-weight-bold">Choose Date</div> */}

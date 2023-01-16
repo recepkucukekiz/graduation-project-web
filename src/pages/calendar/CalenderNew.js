@@ -60,29 +60,29 @@ class Calendar extends Component {
     const events = [
       {
         id: 1,
-        text: "Event 1",
+        text: "Veli Kınık - Sakal",
         start: "2023-03-07T10:30:00",
-        end: "2023-03-07T13:00:00"
+        end: "2023-03-07T11:00:00"
       },
       {
         id: 2,
-        text: "Event 2",
+        text: "Muhammet İnce - Saç",
         start: "2023-03-08T09:30:00",
-        end: "2023-03-08T11:30:00",
+        end: "2023-03-08T10:30:00",
         backColor: "#6aa84f"
       },
       {
         id: 3,
-        text: "Event 3",
-        start: "2023-03-08T12:00:00",
-        end: "2023-03-08T15:00:00",
+        text: "Mehmet Yılmaz - Sakal",
+        start: "2023-03-08T13:00:00",
+        end: "2023-03-08T14:00:00",
         backColor: "#f1c232"
       },
       {
         id: 4,
-        text: "Event 4",
+        text: "Yiğit Özdemir - Saç",
         start: "2023-03-06T11:30:00",
-        end: "2023-03-06T14:30:00",
+        end: "2023-03-06T12:00:00",
         backColor: "#cc4125"
       },
     ];

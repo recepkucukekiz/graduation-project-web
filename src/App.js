@@ -20,6 +20,7 @@ import Dashboard from './pages/management/dashboard/dashboard';
 import Edit from './pages/management/editshop/editshop';
 import EditWorker from './pages/management/editworker/editworker';
 import CalendarNew from './pages/calendar/CalenderNew';
+import AddWorker from './pages/management/addworker/addworker';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/edit" element={<Edit />} />
             <Route path="/editworker/:id" element={<EditWorker />} />
+            <Route path="/addworker" element={<AddWorker />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

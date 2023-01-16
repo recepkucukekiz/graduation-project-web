@@ -1,26 +1,217 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import data from '../../../const';
 import './editworker.css';
+import { getWorkerById, updateWorker, getShopById } from '../../../services/shopservice';
 
 const EditWorker = () => {
     let params = useParams();
-    var worker = data.filter(shop => shop.id == 1)[0].workers.filter(worker => worker.id == params.id)[0];
-    // worker = worker[0];
-    
-    console.log(worker);
+    let workerId = params.id;
 
     const navigate = useNavigate();
-    const [name, setName] = useState(worker.name);
-    const [surname, setSurname] = useState(worker.surname);
-    const [email, setEmail] = useState(worker.email);
-    const [phone, setPhone] = useState(worker.phone);
-    const [services, setServices] = useState(worker.services);
-    const [newService, setNewService] = useState("");
+    const [worker, setWorker] = useState(null);
+    const [shop, setShop] = useState(null);
+    const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    function handleUpdate() {
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [newService, setNewService] = useState("");
+    var options = [];
+
+    useEffect(() => {
+        console.log(workerId);
+
+        // async function fetchData() {
+        //     getWorkerById(workerId).then((response) => {
+        //         console.log(response);
+        //         setWorker(response);
+        //         setServices(response.services);
+        //     });
+        // }
+
+        // fetchData();
+
+        getWorkerById(workerId)
+            .then((response) => {
+                console.log(response);
+                setWorker(response);
+                setServices(response.services);
+                setError(null);
+
+                getShopById(response.shopId)
+                    .then((response) => {
+                        console.log(response);
+                        setShop(response);
+                        setError(null);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        setError(error);
+                    })
+                    .finally(() => {
+                        setLoading(false);
+                    });
+
+            })
+            .catch((error) => {
+                console.log(error);
+                setError(error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+
+        // getShopById(worker.shopId)
+        //     .then((response) => {
+        //         console.log(response);
+        //         setShop(response);
+        //         setError(null);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //         setError(error);
+        //     })
+        //     .finally(() => {
+        //         setLoading(false);
+        //     });
+    }, []);
+
+    function handleUpdate(event) {
+        event.preventDefault();
         console.log("update");
+
+        worker.name = name !== '' ? name : worker.name;
+        worker.email = email !== '' ? email : worker.email;
+        worker.services = services;
+
+        async function fetchData() {
+            await updateWorker(workerId, worker);
+        }
+
+        fetchData();
+    }
+
+    const renderServiceBox = () => {
+        if (shop !== null) {
+            options = shop.services.map((service) => {
+                return (
+                    <option value={service}>{service}</option>
+                )
+            })
+        }
+        return (
+            <div className='d-flex justify-content-between w-100'>
+                <div className='d-flex flex-column worker-input'>
+                    <label>Service</label>
+                    <select
+                        onChange={
+                            (e) => setNewService(e.target.value)
+                        }
+                    >
+                        {options}
+                    </select>
+                </div>
+            </div>
+        )
+    }
+
+
+    const renderForm = () => {
+        if (worker == null) {
+            return (<div>Loading...</div>)
+        }
+        else {
+            return (<div className='col-lg-9'>
+                <div className='shape_box flex-column'>
+                    <form onSubmit={handleUpdate}>
+                        <div className='d-flex justify-content-between w-100'>
+                            <h5>Worker Information</h5>
+                        </div>
+                        <div className='d-flex justify-content-between w-100'>
+                            <div className='d-flex flex-column worker-input'>
+                                <label>Name</label>
+                                <input
+                                    type="text"
+                                    defaultValue={worker.name}
+                                    onChange={
+                                        (e) => setName(e.target.value)
+                                    }
+                                />
+                            </div>
+                            {/* <div className='d-flex flex-column worker-input'>
+                            <label>Surname</label>
+                            <input
+                                type="text"
+                                defaultValue={worker.surname}
+                                onChange={
+                                    (e) => setSurname(e.target.value)
+                                }
+                            />
+                        </div> */}
+                        </div>
+                        <div className='d-flex justify-content-between w-100'>
+                            <div className='d-flex flex-column worker-input'>
+                                <label>Email</label>
+                                <input
+                                    type="text"
+                                    defaultValue={worker.email}
+                                    onChange={
+                                        (e) => setEmail(e.target.value)
+                                    }
+                                />
+                            </div>
+                            {/* <div className='d-flex flex-column worker-input'>
+                            <label>Phone</label>
+                            <input
+                                type="text"
+                                defaultValue={worker.phone}
+                                onChange={
+                                    (e) => setPhone(e.target.value)
+                                }
+                            />
+                        </div> */}
+                        </div>
+                        <div className='d-flex justify-content-between w-100'>
+                            <div className='d-flex flex-column worker-input'>
+                                <label>Services</label>
+                                <select name="Services" size="5">
+                                    {services.map((service) => {
+                                        return (
+                                            <option value={service}>{service}</option>
+                                        )
+                                    }
+                                    )}
+                                </select>
+                            </div>
+                            <div className='d-flex flex-column worker-input'>
+                                <label>Add Services</label>
+                                <div>
+                                    {renderServiceBox()}
+                                    <button
+                                        className='btn btn-light'
+                                        onClick={() => {
+                                            setServices(services => [...services, newService]);
+                                        }}
+                                    >
+                                        Add
+                                    </button>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div className="button-container">
+                            <input type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>)
+        }
     }
 
     return (
@@ -70,71 +261,11 @@ const EditWorker = () => {
                     </p>
                 </div>
             </div>
-            <div className='col-lg-9'>
-                <div className='shape_box flex-column'>
-                    <div className='d-flex justify-content-between w-100'>
-                        <h5>Worker Information</h5>
-                        <button
-
-                            className='btn btn-light'
-                            onClick={() => {
-                                handleUpdate();
-                            }
-                            }>
-                            Edit
-                        </button>
-                    </div>
-                    <div className='d-flex justify-content-between w-100'>
-                        <div className='d-flex flex-column worker-input'>
-                            <label>Name</label>
-                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                        </div>
-                        <div className='d-flex flex-column worker-input'>
-                            <label>Surname</label>
-                            <input type="text" value={surname} onChange={(e) => setSurname(e.target.value)} />
-                        </div>
-                    </div>
-                    <div className='d-flex justify-content-between w-100'>
-                        <div className='d-flex flex-column worker-input'>
-                            <label>Email</label>
-                            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        </div>
-                        <div className='d-flex flex-column worker-input'>
-                            <label>Phone</label>
-                            <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                        </div>
-                    </div>
-                    <div className='d-flex justify-content-between w-100'>
-                        <div className='d-flex flex-column worker-input'>
-                            <label>Services</label>
-                            {/* <input type="text" value={services} onChange={(e) => setServices(e.target.value)} /> */}
-                            <select name="Services" size="5">
-                                {services.map((service) => {
-                                    return (
-                                        <option value={service}>{service}</option>
-                                    )}
-                                )}
-                            </select>
-                        </div>
-                        <div className='d-flex flex-column worker-input'>
-                            <label>Add Services</label>
-                            <div>
-                                <input type="text" value={newService} onChange={(e) => setNewService(e.target.value)} />
-                                <button
-                                    className='btn btn-light'
-                                    onClick={() => {
-                                        setServices(services => [...services, newService]);
-                                    }}
-                                >
-                                    Add
-                                </button>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {loading && <div>A moment please...</div>}
+            {error && (
+                <div>{`There is a problem fetching the post data - ${error}`}</div>
+            )}
+            {worker && services && renderForm()}
         </div>
     )
 }

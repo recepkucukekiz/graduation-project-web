@@ -16,3 +16,17 @@
     display: flex;
     flex-direction: column;
 }
+
+.fullpage {
+    width: auto;
+}
+
+.filter {
+    filter: blur(5px);
+}
+
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}

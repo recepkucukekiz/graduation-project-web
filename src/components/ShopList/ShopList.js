@@ -10,7 +10,6 @@ const ShopList = ({shops}) => {
         shopView.push(
             <div className="shoplist_item"
                 onClick={() => {
-                    console.log("clicked" + shop.id)
                     navigate("/shop/" + shop.id)
                 }}
             >
@@ -18,18 +17,18 @@ const ShopList = ({shops}) => {
                     <img src="https://www.pngitem.com/pimgs/b/188-1884281_barber-shop-logo-png.png" alt="shop logo" className="shoplist_item_logo"/>
                     <p>{shop.name}</p>
                     <p>
-                        {
+                        {/* {
                             shop.services.map((service, index) => {
                                 return (
                                     <span className="shoplist_item_service">{service} </span>
                                 )
                             })
-                        }
+                        } */}
                     </p>
                 </div>
                 <div className="d-flex justify-content-between mx-2">
-                    <p>{shop.working_hours}</p>
-                    <p>{shop.city} / {shop.district}</p>
+                    <p>{shop.workingHours}</p>
+                    <p>{shop.city} / {shop.province}</p>
                 </div>
             </div>
         )
