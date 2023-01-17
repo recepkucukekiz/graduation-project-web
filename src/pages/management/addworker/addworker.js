@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 import { getServiceByShopId, createWorker } from "../../../services/shopservice";
 
 const AddWorker = () => {
@@ -34,7 +35,9 @@ const AddWorker = () => {
     const handleSubmit = async (event) => {
         //Prevent page reload
         event.preventDefault();
-        worker.services = selectedServices;
+        worker.services = selectedServices.map((service) => {
+            return service.id;
+        });
         console.log(worker);
         console.log(selectedServices);
 
@@ -42,11 +45,13 @@ const AddWorker = () => {
             .then((response) => {
                 console.log(response);
                 setIsSubmitted(true);
+                toast.success("Worker added successfully!");
             }
             )
             .catch((error) => {
                 console.log(error);
                 setErrorMessages(error);
+                toast.error("Worker could not be added!");
             }
             )
 
@@ -73,7 +78,7 @@ const AddWorker = () => {
                     <label>Services</label>
                     <select
                         onChange={(e) => {
-                            setNewService(e.target.value);
+                            setNewService(services.find(service => service.id === e.target.value));
                         }}
                     >
                         <option value="">Select a service</option>
@@ -87,8 +92,8 @@ const AddWorker = () => {
     // JSX code for login form
     const renderForm = () => {
         return (<>
-            <div className="form">
-                <form>
+            <div className="form col-lg-6 m-auto shape_box">
+                <form className="w-100">
                     <div className="input-container">
                         <label>Name </label>
                         <input
@@ -143,7 +148,7 @@ const AddWorker = () => {
                             <select name="Services" size="5">
                                 {selectedServices.map((service) => {
                                     return (
-                                        <option value={service}>{service}</option>
+                                        <option value={service.id}>{service.name}</option>
                                     )
                                 }
                                 )}
@@ -192,6 +197,7 @@ const AddWorker = () => {
             {isSubmitted ? <div className="success">Worker added successfully</div> : null}
             {errorMessages.message ? <div className="error">{errorMessages.message}</div> : null}
             {renderForm()}
+            <ToastContainer />
         </div>
     );
 };

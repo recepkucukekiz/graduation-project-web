@@ -3,83 +3,54 @@ import React, { useState } from "react";
 import "./signup.css";
 
 const Signup = () => {
-  // React States
-  const [errorMessages, setErrorMessages] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isFirstFormCompleted, setIsFirstFormCompleted] = useState(false);
+  const [shopName, setShopName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [shopAddress, setShopAddress] = useState("");
+  const [shopPhone, setShopPhone] = useState("");
+  const [shopDescription, setShopDescription] = useState("");
+  const [shopLogo, setShopLogo] = useState("");
 
-  // User signup info
-  const database = [
-    {
-      username: "user1",
-      password: "pass1"
-    },
-    {
-      username: "user2",
-      password: "pass2"
-    }
-  ];
-
-  const errors = {
-    uname: "invalid username",
-    pass: "invalid password",
-    sname: "invalid shop name"
+  const handleSubmit = () => {
+    console.log("Submitted");
   };
 
-  const handleSubmit = (event) => {
-    //Prevent page reload
-    event.preventDefault();
-
-    var { uname, pass } = document.forms[0];
-
-    // Find user signup info
-    const userData = database.find((user) => user.username === uname.value);
-
-    // Compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
-        // Invalid password
-        setErrorMessages({ name: "pass", message: errors.pass });
-      } else {
-        setIsSubmitted(true);
-      }
-    } else {
-      // Username not found
-      setErrorMessages({ name: "uname", message: errors.uname });
-    }
-  };
-
-  // Generate JSX code for error message
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
-    );
-
-  // JSX code for signup form
   const renderForm = (
     <div className="form">
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="input-container">
           <label>Shop name </label>
           <input type="text" name="sname" required />
-          {renderErrorMessage("sname")}
+
         </div>
         <div className="input-container">
           <label>E-Mail </label>
           <input type="text" name="email" required />
-          {renderErrorMessage("sname")}
+
         </div>
         <div className="input-container">
           <label>Username </label>
           <input type="text" name="uname" required />
-          {renderErrorMessage("uname")}
+
         </div>
         <div className="input-container">
           <label>Password </label>
           <input type="password" name="pass" required />
-          {renderErrorMessage("pass")}
+        </div>
+        <div className="input-container">
+          <label>Confirm Password </label>
+          <input type="password" name="cpass" required />
         </div>
         <div className="button-container">
-          <input type="submit" />
+          <input
+            type="button"
+            value="Next"
+            className="btn btn-primary"
+            onClick={() => setIsFirstFormCompleted(true)}
+          />
         </div>
       </form>
     </div>
@@ -88,23 +59,39 @@ const Signup = () => {
   const renderSecondForm = (
     <div className="form">
       <form onSubmit={handleSubmit}>
-      <div className="input-container">
-          <label>Shop name </label>
-          <input type="text" name="sname" required />
-          {renderErrorMessage("sname")}
+        <div className="input-container">
+          <label>Shop Address </label>
+          <input type="text" name="saddress" required />
         </div>
         <div className="input-container">
-          <label>Username </label>
-          <input type="text" name="uname" required />
-          {renderErrorMessage("uname")}
+          <label>Shop Phone </label>
+          <input type="text" name="sphone" required />
         </div>
         <div className="input-container">
-          <label>Password </label>
-          <input type="password" name="pass" required />
-          {renderErrorMessage("pass")}
+          <label>Shop Description </label>
+          <input type="text" name="sdesc" required />
+        </div>
+        <div className="input-container">
+          <label>Shop Logo </label>
+          <input type="file" name="slogo" required />
         </div>
         <div className="button-container">
-          <input type="submit" />
+          <input
+            type="button"
+            value="Back"
+            className="btn btn-danger"
+            onClick={() => setIsFirstFormCompleted(false)}
+          />
+        </div>
+        <div className="button-container">
+          <input
+            type="button"
+            className="btn btn-success"
+            value="Submit"
+            onClick={() => {
+              handleSubmit()
+            }}
+          />
         </div>
       </form>
     </div>
@@ -114,7 +101,7 @@ const Signup = () => {
     <div className="row signup-page">
       <div className="signup-form col-lg-4">
         <div className="title">Sign Up</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {isFirstFormCompleted ? renderSecondForm : renderForm}
       </div>
     </div>
   );

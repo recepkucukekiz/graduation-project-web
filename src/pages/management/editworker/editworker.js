@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import data from '../../../const';
 import './editworker.css';
 import { getWorkerById, updateWorker, getShopById } from '../../../services/shopservice';
+import { ToastContainer, toast } from 'react-toastify';
 
 const EditWorker = () => {
     let params = useParams();
@@ -21,6 +22,7 @@ const EditWorker = () => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [newService, setNewService] = useState("");
+    const [selectedRemoveService, setSelectedRemoveService] = useState("");
     var options = [];
 
     useEffect(() => {
@@ -93,7 +95,12 @@ const EditWorker = () => {
             await updateWorker(workerId, worker);
         }
 
-        fetchData();
+        fetchData().then(() => {
+            toast.success("Worker updated successfully!");
+        }
+        ).catch((error) => {
+            toast.error("Worker could not be updated!");
+        });
     }
 
     const renderServiceBox = () => {
@@ -126,7 +133,7 @@ const EditWorker = () => {
             return (<div>Loading...</div>)
         }
         else {
-            return (<div className='col-lg-9'>
+            return (<div className='col-lg-9 m-auto'>
                 <div className='shape_box flex-column'>
                     <form onSubmit={handleUpdate}>
                         <div className='d-flex justify-content-between w-100'>
@@ -179,14 +186,31 @@ const EditWorker = () => {
                         <div className='d-flex justify-content-between w-100'>
                             <div className='d-flex flex-column worker-input'>
                                 <label>Services</label>
-                                <select name="Services" size="5">
-                                    {services.map((service) => {
-                                        return (
-                                            <option value={service}>{service}</option>
-                                        )
-                                    }
-                                    )}
-                                </select>
+                                <div>
+                                    <select
+                                        name="Services"
+                                        size="5"
+                                        onChange={
+                                            (e) => setSelectedRemoveService(e.target.value)
+                                        }
+                                    >
+                                        {services.map((service) => {
+                                            return (
+                                                <option value={service}>{service}</option>
+                                            )
+                                        }
+                                        )}
+                                    </select>
+                                    <button
+                                        className='btn btn-light'
+                                        onClick={() => {
+                                            // Remove the selected service
+                                            setServices(services.filter((service) => service !== selectedRemoveService));
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </div>
                             <div className='d-flex flex-column worker-input'>
                                 <label>Add Services</label>
@@ -216,7 +240,7 @@ const EditWorker = () => {
 
     return (
         <div className='row'>
-            <div className='col-lg-3'>
+            {/* <div className='col-lg-3'>
                 <div className='shape_box fd-column'>
                     <div className='d-flex justify-content-end w-100'>
                         <button
@@ -260,12 +284,13 @@ const EditWorker = () => {
                         <span>10:00 - 18:00</span>
                     </p>
                 </div>
-            </div>
+            </div> */}
             {loading && <div>A moment please...</div>}
             {error && (
                 <div>{`There is a problem fetching the post data - ${error}`}</div>
             )}
             {worker && services && renderForm()}
+            <ToastContainer />
         </div>
     )
 }
