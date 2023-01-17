@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { getServiceByShopId } from "../../../services/shopservice";
+import { getServiceByShopId, createWorker } from "../../../services/shopservice";
 
 const AddWorker = () => {
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const shopId = JSON.parse(localStorage.getItem('user')).shopId;
     const [worker, setWorker] = useState({
         name: "",
-        phone: "",
+        username: "",
+        password: "",
         email: "",
+        shopId: shopId,
         services: []
     });
     const [services, setServices] = useState([]);
     const [selectedServices, setSelectedServices] = useState([]);
-    const shopId = JSON.parse(localStorage.getItem('user')).shopId;
+    const [newService, setNewService] = useState("");
     var options = [];
 
     useEffect(() => {
         getServiceByShopId(shopId).then((response) => {
             setServices(response);
         })
-    },[]);
+    }, []);
 
     const errors = {
         name: "invalid name",
@@ -31,6 +34,22 @@ const AddWorker = () => {
     const handleSubmit = async (event) => {
         //Prevent page reload
         event.preventDefault();
+        worker.services = selectedServices;
+        console.log(worker);
+        console.log(selectedServices);
+
+        createWorker(worker)
+            .then((response) => {
+                console.log(response);
+                setIsSubmitted(true);
+            }
+            )
+            .catch((error) => {
+                console.log(error);
+                setErrorMessages(error);
+            }
+            )
+
     };
 
     // Generate JSX code for error message
@@ -42,7 +61,6 @@ const AddWorker = () => {
 
     const renderServiceBox = () => {
         if (services !== null) {
-            console.log(services);
             options = services.map((service) => {
                 return (
                     <option value={service.id}>{service.name}</option>
@@ -53,19 +71,14 @@ const AddWorker = () => {
             <div className='d-flex justify-content-between w-100'>
                 <div className='d-flex flex-column worker-input'>
                     <label>Services</label>
-                    <select>
-                        {options}
-                    </select>
-                </div>
-                <div className='d-flex flex-column worker-input'>
-                    <button
-                        className='btn btn-primary'
-                        onClick={() => {
-                            selectedServices.push(document.querySelector("select").value);
+                    <select
+                        onChange={(e) => {
+                            setNewService(e.target.value);
                         }}
                     >
-                        Add
-                    </button>
+                        <option value="">Select a service</option>
+                        {options}
+                    </select>
                 </div>
             </div>
         )
@@ -73,22 +86,55 @@ const AddWorker = () => {
 
     // JSX code for login form
     const renderForm = () => {
-        return (
+        return (<>
             <div className="form">
-                <form onSubmit={handleSubmit}>
+                <form>
                     <div className="input-container">
                         <label>Name </label>
-                        <input type="text" name="name" required />
+                        <input
+                            type="text"
+                            defaultValue={worker.name}
+                            onChange={(e) => {
+                                setWorker({ ...worker, name: e.target.value });
+                            }}
+                            required
+                        />
                         {renderErrorMessage("name")}
                     </div>
                     <div className="input-container">
-                        <label>Phone </label>
-                        <input type="text" name="phone" required />
+                        <label>Username </label>
+                        <input
+                            type="text"
+                            defaultValue={worker.username}
+                            onChange={(e) => {
+                                setWorker({ ...worker, username: e.target.value });
+                            }}
+                            required
+                        />
+                        {renderErrorMessage("phone")}
+                    </div>
+                    <div className="input-container">
+                        <label>Password </label>
+                        <input
+                            type="password"
+                            defaultValue={worker.password}
+                            onChange={(e) => {
+                                setWorker({ ...worker, password: e.target.value });
+                            }}
+                            required
+                        />
                         {renderErrorMessage("phone")}
                     </div>
                     <div className="input-container">
                         <label>Email </label>
-                        <input type="text" name="email" required />
+                        <input
+                            type="text"
+                            defaultValue={worker.email}
+                            onChange={(e) => {
+                                setWorker({ ...worker, email: e.target.value });
+                            }}
+                            required
+                        />
                         {renderErrorMessage("email")}
                     </div>
                     <div className='d-flex justify-content-between w-100'>
@@ -107,30 +153,44 @@ const AddWorker = () => {
                             <label>Add Services</label>
                             <div>
                                 {renderServiceBox()}
-                                {/* <button
-                                        className='btn btn-light'
-                                        onClick={() => {
-                                            setServices(services => [...services, newService]);
-                                        }}
-                                    >
-                                        Add
-                                    </button> */}
+                                <button
+                                    className='btn btn-light'
+                                    type="button"
+                                    onClick={() => {
+                                        if (selectedServices.includes(newService)) {
+                                            alert("Service already added");
+                                            return;
+                                        } else if (newService === "") {
+                                            alert("Please select a service");
+                                            return;
+                                        } else {
+                                            setSelectedServices([...selectedServices, newService]);
+                                        }
+                                    }}
+                                >
+                                    Add
+                                </button>
                             </div>
 
 
                         </div>
                     </div>
                     <div className="button-container">
-                        <input type="submit" />
+                        <input
+                        type="submit"
+                        onClick={handleSubmit}
+                        />
                     </div>
                 </form>
             </div>
-        );
+            </>);
     };
 
     return (
         <div className="login">
             <h1>Add Worker</h1>
+            {isSubmitted ? <div className="success">Worker added successfully</div> : null}
+            {errorMessages.message ? <div className="error">{errorMessages.message}</div> : null}
             {renderForm()}
         </div>
     );

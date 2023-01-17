@@ -154,6 +154,19 @@ export const deleteWorker = async (workerId) => {
     })
 }
 
+export const createWorker = async (worker) => {
+    return await fetch(`${API_URL}/worker`, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(worker),
+    }).then((response) => {
+        return response.json()
+    })
+}
+
 // Address Functions
 export const createAddress = (address) => {
     return fetch(`${API_URL}/address`, {
