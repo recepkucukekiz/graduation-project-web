@@ -21,6 +21,7 @@ import Edit from './pages/management/editshop/editshop';
 import EditWorker from './pages/management/editworker/editworker';
 import CalendarNew from './pages/calendar/CalenderNew';
 import AddWorker from './pages/management/addworker/addworker';
+import AddService from './pages/management/addservice/addservice';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="/edit" element={<Edit />} />
             <Route path="/editworker/:id" element={<EditWorker />} />
             <Route path="/addworker" element={<AddWorker />} />
+            <Route path="/addservice" element={<AddService />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

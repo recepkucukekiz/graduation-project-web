@@ -146,6 +146,15 @@ const Dashboard = () => {
                         <div className='d-flex justify-content-between
                          p-4'>
                             <h3>Workers</h3>
+                            <div>
+                            <button
+                                className='btn btn-primary mx-3'
+                                onClick={() => {
+                                    navigate("/addservice");
+                                }}
+                            >
+                                Add Service
+                            </button>
                             <button
                                 className='btn btn-primary ml-3'
                                 onClick={() => {
@@ -154,6 +163,7 @@ const Dashboard = () => {
                             >
                                 Add Worker
                             </button>
+                            </div>
 
                         </div>
                         <div>

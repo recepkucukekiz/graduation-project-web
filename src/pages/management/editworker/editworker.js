@@ -84,7 +84,6 @@ const EditWorker = () => {
     }, []);
 
     function handleUpdate(event) {
-        event.preventDefault();
         console.log("update");
 
         worker.name = name !== '' ? name : worker.name;
@@ -120,6 +119,7 @@ const EditWorker = () => {
                             (e) => setNewService(e.target.value)
                         }
                     >
+                        <option value="">Select Service</option>
                         {options}
                     </select>
                 </div>
@@ -135,7 +135,7 @@ const EditWorker = () => {
         else {
             return (<div className='col-lg-9 m-auto'>
                 <div className='shape_box flex-column'>
-                    <form onSubmit={handleUpdate}>
+                    <div>
                         <div className='d-flex justify-content-between w-100'>
                             <h5>Worker Information</h5>
                         </div>
@@ -219,6 +219,10 @@ const EditWorker = () => {
                                     <button
                                         className='btn btn-light'
                                         onClick={() => {
+                                            if (newService === '') {
+                                                toast.error("Please select a service!");
+                                                return;
+                                            }
                                             setServices(services => [...services, newService]);
                                         }}
                                     >
@@ -230,9 +234,11 @@ const EditWorker = () => {
                             </div>
                         </div>
                         <div className="button-container">
-                            <input type="submit" />
+                            <input type="button" value="Update" onClick={() => {
+                                handleUpdate()
+                            }} />
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>)
         }

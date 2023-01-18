@@ -220,6 +220,19 @@ export const getServiceByShopId = (shopId) => {
     })
 }
 
+export const createService = (service) => {
+    return fetch(`${API_URL}/service`, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(service),
+    }).then((response) => {
+        return response.json()
+    })
+}
+
 // Customer Functions
 
 export const createCustomer = (customer) => {
